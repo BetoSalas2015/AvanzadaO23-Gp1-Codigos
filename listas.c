@@ -155,39 +155,36 @@ char remueve1()
 	return dato;
 }
 
-char remuevn(int pos)
+
+char remueven(int pos)
 {
 	char dato;
 	nodo *anterior = NULL, *siguiente = NULL;
-	if( raiz == NULL)
-	{
-		printf("Lista vacia, no hay nada que elimniar.\n");
-		pausa;
-		return '\0';
-	}
+	 
 	anterior = raiz;
-	if( anterior->sig == NULL)
+	if( pos == 1)
 	{
-		raiz = NULL;
+		raiz = raiz ->sig;
 		dato = anterior->info;
 		free(anterior);
 		return dato;
 	}
 	else
 	{
+		int cont = 1;
 		siguiente = anterior ->sig;
-		while(siguiente -> sig != NULL)
+		while(siguiente -> sig != NULL && cont < pos -1)
 		{
 			anterior = anterior->sig;			// anterior = siguiente;
 			siguiente = siguiente->sig;
+			cont++;
 		}
 		dato = siguiente ->info;
-		anterior ->sig = NULL;
+		anterior ->sig = siguiente ->sig;
 		free(siguiente);
 		return dato;
 	}
 }
-
 
 void imprimeLista()
 {
@@ -216,8 +213,8 @@ int main()
 
 	 imprimeLista();
 
-	 printf("Salió un %c\n", remueve()  );
-	 printf("Salió un %c\n", remueve1()  );
+	 printf("Salió un %c\n", remueven(3)  );
+	 printf("Salió un %c\n", remueven(1)  );
 
 	 imprimeLista();
 
