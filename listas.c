@@ -4,13 +4,6 @@
 #define pausa system("pause")
 #define cls system("cls")
 #define NL putchar('\n')
-
-// Prototipos
-void insert( char dato );
-void insert1( char dato );
-void insertn( char dato, int pos );
-char remueve();
-
 //  Definicion del nodo
 struct Nodo 
 { 
@@ -20,10 +13,22 @@ struct Nodo
 
 typedef struct Nodo nodo;
 
-nodo *raiz = NULL;				// Lista Vacia
+// Prototipos
+nodo *insert( nodo *raiz, char dato );
+void insert1( char dato );
+void insertn( char dato, int pos );
+char remueve();
+char remueve1();
+char remueven(int pos);
+void imprimeLista();
+
+
+
+nodo *raiz = NULL;	
+
 
 //  Primitivas
-void insert( char dato )
+nodo *insert( nodo *raiz, char dato )
 {
 	nodo *nuevo = NULL;
 	nuevo = ( nodo *) malloc( sizeof( nodo ) );
@@ -47,7 +52,7 @@ void insert( char dato )
 		recorre -> sig = nuevo;
 
 	}
-	return;
+	return raiz;
 }
 
 void insert1( char dato )
@@ -186,7 +191,8 @@ char remueven(int pos)
 	}
 }
 
-void imprimeLista()
+
+void imprimeLista(nodo *raiz)
 {
 	nodo *recorre = raiz;
 	while( recorre != NULL )
@@ -201,22 +207,29 @@ void imprimeLista()
 
 int main()
 {
-	 imprimeLista();
+	nodo *nombre = NULL, *apellido = NULL; 
+	 imprimeLista(nombre);
 
-	 insert1('R');
-	 insert1('o');
-	 insert1('b');
-	 insert1('e');
-	 insert1('r');
-	 insert1('t');
-	 insert1('o');
+	 nombre = insert(nombre, 'R');
+	 nombre = insert(nombre, 'o');
+	 nombre = insert(nombre, 'b');
+	 nombre = insert(nombre, 'e');
+	 nombre = insert(nombre, 'r');
+	 nombre = insert(nombre, 't');
+	 nombre = insert(nombre, 'o');
 
-	 imprimeLista();
 
-	 printf("Salió un %c\n", remueven(3)  );
-	 printf("Salió un %c\n", remueven(1)  );
+	 apellido = insert(apellido, 'S');
+	 apellido = insert(apellido, 'a');
+	 apellido = insert(apellido, 'l');
+	 apellido = insert(apellido, 'a');
+	 apellido = insert(apellido, 'z');
+	 apellido = insert(apellido, 'a');
+	 apellido = insert(apellido, 'r');
 
-	 imprimeLista();
+	 imprimeLista(nombre);
+	 imprimeLista(apellido);
+
 
 	 pausa;
  	 return 0;
