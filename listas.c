@@ -15,9 +15,9 @@ typedef struct Nodo nodo;
 
 // Prototipos
 nodo *insert( nodo *raiz, char dato );
-void insert1( char dato );
-void insertn( char dato, int pos );
-char remueve();
+nodo *insert1( nodo *raiz, char dato );
+nodo *insertn( nodo *raiz, char dato, int pos );
+nodo *remueve(nodo *raiz, char *dato);
 char remueve1();
 char remueven(int pos);
 void imprimeLista();
@@ -55,7 +55,7 @@ nodo *insert( nodo *raiz, char dato )
 	return raiz;
 }
 
-void insert1( char dato )
+nodo *insert1( nodo *raiz, char dato )
 {
 	nodo *nuevo = NULL;
 	nuevo = ( nodo *) malloc( sizeof( nodo ) );
@@ -68,12 +68,12 @@ void insert1( char dato )
 	nuevo -> info = dato;
 	nuevo -> sig = raiz;
 	raiz = nuevo;
-	return;
+	return raiz;
 }
 
 
 
-void insertn( char dato, int pos )
+nodo *insertn( nodo *raiz, char dato, int pos )
 {
 	int cont;
 	nodo *nuevo = NULL;
@@ -108,25 +108,27 @@ void insertn( char dato, int pos )
 		recorre -> sig = nuevo;
 
 	}
-	return;
+	return raiz;
 }
-char remueve()
+
+
+nodo *remueve(nodo *raiz, char *dato)
 {
-	char dato;
+	
 	nodo *anterior = NULL, *siguiente = NULL;
 	if( raiz == NULL)
 	{
 		printf("Lista vacia, no hay nada que elimniar.\n");
 		pausa;
-		return '\0';
+		return NULL;
 	}
 	anterior = raiz;
 	if( anterior->sig == NULL)
 	{
 		raiz = NULL;
-		dato = anterior->info;
+		*dato = anterior->info;
 		free(anterior);
-		return dato;
+		return raiz;
 	}
 	else
 	{
@@ -136,10 +138,10 @@ char remueve()
 			anterior = anterior->sig;			// anterior = siguiente;
 			siguiente = siguiente->sig;
 		}
-		dato = siguiente ->info;
+		*dato = siguiente ->info;
 		anterior ->sig = NULL;
 		free(siguiente);
-		return dato;
+		return raiz;
 	}
 }
 
@@ -207,6 +209,13 @@ void imprimeLista(nodo *raiz)
 
 int main()
 {
+	//int javierHernandez;
+	//int *chicharito;
+
+	//chicharito = &javierHernandez;   //  creamos un alias (apodo)
+	//*chicharito = 50;
+	char dato;
+
 	nodo *nombre = NULL, *apellido = NULL; 
 	 imprimeLista(nombre);
 
@@ -219,13 +228,18 @@ int main()
 	 nombre = insert(nombre, 'o');
 
 
-	 apellido = insert(apellido, 'S');
-	 apellido = insert(apellido, 'a');
-	 apellido = insert(apellido, 'l');
-	 apellido = insert(apellido, 'a');
-	 apellido = insert(apellido, 'z');
-	 apellido = insert(apellido, 'a');
-	 apellido = insert(apellido, 'r');
+	 apellido = insert1(apellido, 'S');
+	 apellido = insert1(apellido, 'a');
+	 apellido = insert1(apellido, 'l');
+	 apellido = insert1(apellido, 'a');
+	 apellido = insert1(apellido, 'z');
+	 apellido = insert1(apellido, 'a');
+	 apellido = insert1(apellido, 'r');
+
+	 apellido = remueve(apellido, &dato);
+	 printf("El dato que salio fue; %c\n", dato);
+	 nombre = remueve(nombre, &dato);
+	 printf("El dato que salio fue; %c\n", dato);
 
 	 imprimeLista(nombre);
 	 imprimeLista(apellido);
